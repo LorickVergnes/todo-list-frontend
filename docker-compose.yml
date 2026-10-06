@@ -1,0 +1,8 @@
+services:
+  frontend:
+    build: .
+    restart: unless-stopped
+    environment:
+      BACKEND_URL: ${BACKEND_URL:-http://backend:3000}
+    ports:
+      - "${FRONTEND_PORT:-8090}:80"

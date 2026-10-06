@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+  </head>
+  <body>
+    <main class="app">
+      <h1>Todo List</h1>
+
+      <form id="todo-form" class="todo-form" autocomplete="off">
+        <input
+          id="todo-input"
+          type="text"
+          placeholder="Nouvelle tâche…"
+          maxlength="255"
+          aria-label="Nouvelle tâche"
+          required
+        />
+        <button type="submit">Ajouter</button>
+      </form>
+
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <ul id="todo-list" class="todo-list"></ul>
+
+      <p id="counter" class="counter"></p>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
