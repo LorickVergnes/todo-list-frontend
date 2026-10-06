@@ -1,19 +1,21 @@
+# Les variables ${...} sont remplacées par leur valeur au démarrage du conteneur
 server {
-    listen 80;
+    listen ${PORT};
     server_name _;
 
     root /usr/share/nginx/html;
     index index.html;
 
-    # DNS interne de Docker : l'adresse du backend est résolue à chaque requête,
+    # DNS du conteneur : l'adresse du backend est résolue à chaque requête,
     # ce qui permet à nginx de démarrer même si le backend n'est pas encore lancé
-    resolver 127.0.0.11 valid=10s;
+    resolver ${NGINX_LOCAL_RESOLVERS} valid=10s;
 
-    # Les appels à l'API sont relayés vers le backend (BACKEND_URL est remplacé au démarrage du conteneur)
+    # Les appels à l'API sont relayés vers le backend
     location /api/ {
         set $upstream ${BACKEND_URL};
         proxy_pass $upstream;
-        proxy_set_header Host $host;
+        # Nécessaire quand le backend est joint en HTTPS derrière un nom de domaine partagé
+        proxy_ssl_server_name on;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
